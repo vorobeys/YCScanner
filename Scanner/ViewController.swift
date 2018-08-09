@@ -18,6 +18,9 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var popupButton: UIButton!
     @IBOutlet weak var popupLabel: UILabel!
+    @IBOutlet weak var countLabel: UILabel!
+    @IBOutlet weak var countImage: UIImageView!
+
     var captureSession : AVCaptureSession?
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var qrCodeFrameView: UIView?
@@ -56,6 +59,8 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             captureSession?.startRunning()
             
             view.bringSubview(toFront: infoLabel)
+            view.bringSubview(toFront: countLabel)
+            view.bringSubview(toFront: countImage)
             
             qrCodeFrameView = UIView()
             if let qrCodeFrameView = qrCodeFrameView {
@@ -127,6 +132,7 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                             let typeTicketJSON = "Тип билета: " + json["TypeTicket"].stringValue
                             price = "Цена: " + json["Price"].stringValue
                             let numberMarks = "Количество отметок: " + json["NumberMarks"].stringValue
+                            self.countLabel.text = "\(json["CountIncomer"])/\(json["CountAll"])"
                             getMessage = nameEvent + "\n" + typeTicketJSON + "\n" + price + "\n" + numberMarks
                             self.imageSmile.image = UIImage(named: "good")
                             self.popupView.backgroundColor = UIColor(red:0.20, green:0.80, blue:0.20, alpha:1.0)
